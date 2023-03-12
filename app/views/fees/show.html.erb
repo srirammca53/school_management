@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @fee.user_id %>
+</p>
+
+<p>
+  <strong>Batch:</strong>
+  <%= @fee.batch_id %>
+</p>
+
+<p>
+  <strong>Course:</strong>
+  <%= @fee.course_id %>
+</p>
+
+<p>
+  <strong>Total fee paid:</strong>
+  <%= @fee.total_fee_paid %>
+</p>
+
+<%= link_to 'Edit', edit_fee_path(@fee) %> |
+<%= link_to 'Back', fees_path %>

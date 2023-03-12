@@ -1,0 +1,12 @@
+
+Your Enrolled Batches : <%= link_to "Your Batchmates" , batch_users_user_path(Current.user) %>
+<br/>
+Your Batches:
+
+<% @batches.each do |batch| %>
+  Batch Number: <%= batch.number %>
+  Start Date: <%= batch.start_date %>
+  End Date: <%= batch.end_date %>
+  Time: <%= batch.timee %>
+  <br/>
+<% end %>

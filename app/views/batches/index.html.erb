@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Batches</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Timee</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @batches.each do |batch| %>
+      <tr>
+        <td><%= batch.number %></td>
+        <td><%= batch.start_date %></td>
+        <td><%= batch.end_date %></td>
+        <td><%= batch.timee %></td>
+        <td><%= User.find(batch.user_id).first_name %></td>
+        <td><%= link_to 'Show', batch %></td>
+        <td><%= link_to 'Edit', edit_batch_path(batch) %></td>
+        <td><% if Current.user.role_id == 1 %><%= link_to 'Destroy', batch, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<% if Current.user.role_id == 1 %>
+  <%= link_to 'New Batch', new_batch_path %>
+<% end %>

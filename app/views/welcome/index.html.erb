@@ -1,0 +1,56 @@
+<% if Current.user %>
+	Hi <%= Current.user.first_name %>
+	<br/>
+	<br/>
+	<br/>
+	<% if Current.user.role_id == 1 %>
+	  <br/>
+	  List of all Institutes: <%= link_to "All Institutes" ,institutes_path %><br/><br/>
+	  List of all Users(School admins and Students ) : <%= link_to "All Users" , users_path %><br/><br/>
+	  List of all Batches: <%= link_to "All Batches" ,batches_path %><br/><br/>
+	  List of all Courses: <%= link_to "All Courses" ,courses_path %><br/><br/>
+	  List of all Fees: <%= link_to "All Fee Details" ,fees_path %><br/><br/>
+
+
+
+	<% end %>
+
+	<% if Current.user.role_id == 2 %>
+	  Details of you Institute: <%= link_to "Details" , @institute %><br/><br/>
+	  Details of your Institute Batch : <%= link_to "Batch Details", batches_path %><br/><br/>
+	  Details of your Institute Batch Course : <%= link_to "Course Details", courses_path %><br/><br/>
+	  Details of your Institute Batch Course Fees : <%= link_to "Fee Details", "#" %><br/><br/>
+	<% end %>
+
+	<% if Current.user.role_id == 3 %>
+	   Your Enrolled Batches : <%= link_to "Your Batches" , user_batches_user_path(Current.user) %>
+	   List of Batches:
+	   <table>
+	      <thead>
+	     	<th>Name of Course</th>
+	     	<th>Fee</th>
+	     	<th>Batch number</th>
+	     	<th>Enroll?</th>
+	      </thead>
+	      <tbody>
+	        <% @courses.each do |course| %>
+	          <tr>
+	          	<td><%= course.name %></td>
+	            <td><%= course.fee %></td>
+	            <td><%= Batch.find(course.batch_id)&.id %></td>
+	            <td>
+	            	<%if Fee.where(user_id: Current.user.id, batch_id: course.batch_id, course_id: course.id).first.present? %>
+	            	  Already Enrolled!
+	            	<% else %>
+	            	  <%= link_to "Yes", enroll_batch_path(id: course.batch_id, course_id: course.id, user_id: Current.user.id) %>
+	            	<% end %>
+	            </td>
+	        <% end %>
+	      </tbody>
+	    </table>
+
+	<% end %>
+<% else %>
+  <br/>
+ <h2><center> Welcome To the School Management Tool </center></h2>
+<% end %>
